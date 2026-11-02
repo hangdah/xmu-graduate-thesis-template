@@ -1,0 +1,4 @@
+% ==================== 书脊文字试排接口 ====================
+
+\newcommand{\spinetext}[1]{\def\xmu@spineextra{#1}}
+\newcommand{\makespinetext}{\par{\kaishu\zihao{4}\xmu@title\quad\xmu@author\quad\ifcsdef{xmu@advisor}{\xmu@advisor}{\ifcsdef{xmu@campusadvisor}{\xmu@campusadvisor}{}}\quad\ifcsdef{xmu@spineextra}{\xmu@spineextra}{XXX}\quad厦门大学}\par}

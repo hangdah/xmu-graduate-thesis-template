@@ -1,0 +1,29 @@
+% ==================== 参考文献页格式、文献样式与条目间距 ====================
+
+%%%%%%%% 参考文献 %%%%%%%%
+
+\newenvironment{reference}{
+    % 由 BibTeX 列表生成一次标题；换页后再写目录，避免目录指向上一页。
+    \renewcommand{\bibsection}{%
+        \chapter*{参考文献}%
+        \markboth{参考文献}{参考文献}%
+        \addcontentsline{toc}{chapter}{参考文献}  % 注意：这时候已经插入目录
+        \addcontentsline{entoc}{chapter}{References}%
+    }%
+    % 数字标签仍由 natbib 生成，续行回到版心左边缘，不额外悬挂缩进。
+    \renewcommand{\NAT@bibsetnum}[1]{%
+        \settowidth{\labelwidth}{\@biblabel{##1}}%
+        \setlength{\leftmargin}{0pt}%
+        \setlength{\itemindent}{\dimexpr\labelwidth+\labelsep\relax}%
+        \setlength{\listparindent}{0pt}%
+        \setlength{\itemsep}{\bibsep}%
+        \setlength{\parsep}{0pt}%
+    }%
+    \let\@bibsetup\NAT@bibsetnum
+}{
+    \clearpage
+}
+
+\bibliographystyle{gbt7714-2005.bst}  % 参考文献格式 GB/T 7714-2005
+\renewcommand{\bibfont}{\linespread{1.5}\xmu@songti\zihao{5}\raggedright} % 参考文献字体
+\renewcommand{\bibsep}{0.5ex}         % 参考文献之间的间距

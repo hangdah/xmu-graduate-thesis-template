@@ -1,0 +1,14 @@
+% ==================== 英文摘要标题、页脚和关键词格式 ====================
+
+% 英文摘要
+\newenvironment{enabstract}{
+    \xmu@fronttitle{\normalfont\rmfamily\bfseries\zihao{-3}}{Abstract}%
+    \xmu@bodyparagraphs
+    \par
+}{
+    \par
+    \vspace{1em}
+    \indent
+    {\normalfont\rmfamily\bfseries\zihao{-4}Keywords: }\xmu@enkeywords
+    \clearpage
+}

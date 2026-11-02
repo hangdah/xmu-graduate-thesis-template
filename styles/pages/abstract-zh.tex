@@ -1,0 +1,20 @@
+% ==================== 中文摘要标题、页脚和关键词格式 ====================
+
+%%%%%%%% 摘要 %%%%%%%%
+
+% 中文摘要
+\newenvironment{abstract}{
+    \clearpage
+    \ifcsdef{xmu@print}{\cleardoublepage}{}%
+    \pagenumbering{Roman}%
+    \xmu@fronttitle{\xmu@heiti\zihao{-3}}{摘\quad 要}%
+    \xmu@bodyparagraphs
+    \par
+}{
+    \par
+    \vspace{1em}
+    \indent
+    {\xmu@heiti\zihao{-4}关键词：}\xmu@keywords
+    \def\xmu@inabstract{true}
+    \clearpage
+}

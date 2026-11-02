@@ -1,0 +1,43 @@
+% ==================== 附录标题、页眉页脚及编号规则 ====================
+
+%%%%%%%% 附录 %%%%%%%%
+
+% 环境结束后恢复原计数器，避免附录影响后续正文编号。
+\newcommand{\xmu@appendixsavecounter}[1]{\csedef{xmu@appendix@#1}{\number\value{#1}}}
+\newcommand{\xmu@appendixrestorecounter}[1]{\setcounter{#1}{\csuse{xmu@appendix@#1}}}
+
+\renewenvironment{appendix}{
+    \chapter*{附\quad\; 录}
+    \markboth{附录}{附录}%
+    \pagestyle{fancy}
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \fancyhead[OC]{\rm\zihao{-5}附\quad\; 录}
+    \fancyhead[EC]{\rm\zihao{-5}\xmu@title}
+    \fancyfoot[C]{\rm\zihao{-5}\thepage}
+    \addcontentsline{toc}{chapter}{附录}
+    \addcontentsline{entoc}{chapter}{Appendix}
+
+    % 设置附录编号格式
+    \forcsvlist{\xmu@appendixsavecounter}{chapter,figure,table,equation,section,subsection,subsubsection}%
+    \renewcommand{\theHchapter}{appendix}%
+    \renewcommand{\thefigure}{A.\arabic{figure}}
+    \renewcommand{\thetable}{A.\arabic{table}}
+    \renewcommand{\theequation}{A.\arabic{equation}}
+    \renewcommand{\thesection}{A.\arabic{section}}
+    \renewcommand{\thesubsection}{A.\arabic{section}.\arabic{subsection}}
+    \renewcommand{\thesubsubsection}{A.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+    % 更新计数器
+    \addtocounter{chapter}{1}
+    \setcounter{figure}{0}
+    \setcounter{table}{0}
+    \setcounter{equation}{0}
+    \setcounter{section}{0}
+    \setcounter{subsection}{0}
+    \setcounter{subsubsection}{0}
+}{
+    \par
+    \clearpage
+    \forcsvlist{\xmu@appendixrestorecounter}{chapter,figure,table,equation,section,subsection,subsubsection}%
+}

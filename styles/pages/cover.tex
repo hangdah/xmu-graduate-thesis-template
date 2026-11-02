@@ -1,0 +1,130 @@
+% ==================== 封面布局、字号、间距及封面后的页码设置 ====================
+
+\newcommand{\xmu@coverrow}[2]{\par\noindent\makebox[8em][l]{#1}#2\par}
+
+% degree 专用定位：坐标原点为纸张左上角，单位由调用处显式给出。
+% north west 锚点对齐文字盒顶部；minipage[t] 以首行基线为参考，
+% TikZ 会计入首行字高，将顶部坐标换算为基线，不能直接用 Y 值作基线。
+% 文字盒边界与 PDF 可见字形边界仍有差异；以下为规范坐标的初始定位值。
+\newcommand{\xmu@degreecovertext}[5]{%
+  \node[anchor=north west,inner sep=0pt,outer sep=0pt]
+    at ([xshift=#1,yshift=-#2]current page.north west) {%
+      \begin{minipage}[t]{#3}
+        \setlength{\parindent}{0pt}%
+        \setlength{\parskip}{0pt}%
+        #4#5\par
+      \end{minipage}%
+    };%
+}
+
+% 仅供学位论文封面使用；practice 继续使用下方原有布局。
+\newcommand{\xmu@degreecover}{%
+  % 封面页边距单独设置，结束后恢复正文设置，不改变后续页码逻辑。
+  \newgeometry{top=25.4mm,bottom=25.4mm,left=31.75mm,right=31.75mm}%
+  \thispagestyle{empty}%
+  \begingroup
+    % 排除正文 1.5 倍行距的影响；Word 的 pt 对应 LaTeX 的 bp。
+    \linespread{1}\normalfont
+    % fonts.tex 已将宋、黑、楷显式映射到 simsun.ttc、simhei.ttf、simkai.ttf；
+    % base.tex 的 AutoFakeBold 保证这些中文字体加粗时仍使用原字体。
+    \noindent\begin{tikzpicture}[remember picture,overlay]
+      % 学校编码、学号：宋体 12 pt 加粗，上下两行，固定 20 pt 行距。
+      \xmu@degreecovertext{31.76mm}{27.44mm}{146.49mm}{\raggedright}{%
+        \fontspec[AutoFakeBold=2.17]{simsun.ttc}\songti\bfseries
+        \fontsize{12bp}{20bp}\selectfont
+        学校编码：\xmu@schoolcode\par
+        学\hspace{2em}号：\xmu@idn
+      }
+      % 使用 figures 中的高清校名图片（1920 x 593 px，72 dpi）。
+      % 仅在排版时裁去白边：左 54、下 46、右 72、上 55 px；原图不修改。
+      % 源图 72 dpi，故 trim 中 1 bp 对应 1 px；裁后内容为 1794 x 492 px。
+      % 按规范宽度 48.16 mm 等比显示，高约 13.21 mm，接近参考的 13.23 mm。
+      \node[anchor=north west,inner sep=0pt,outer sep=0pt]
+        at ([xshift=81.20mm,yshift=-53.40mm]current page.north west)
+        {\includegraphics[trim=54bp 46bp 72bp 55bp,clip,width=48.16mm]{figures/xmu-logo-text.jpg}};
+      % 居中区域宽度取 A4 减去左右页边距，以纸张中心 X=105 mm 对齐。
+      % 学位层级与“学位论文”同一行：宋体 22 pt 加粗。
+      \xmu@degreecovertext{31.75mm}{75.90mm}{146.5mm}{\centering}{%
+        \songti\bfseries\fontsize{22bp}{30bp}\selectfont
+        \xmu@level 学位论文
+      }
+      % 类别单独成行，仅输出现有变量中的一个选项，并保留适当字间距。
+      \xmu@degreecovertext{31.75mm}{93.57mm}{146.5mm}{\centering}{%
+        \songti\bfseries\fontsize{22bp}{30bp}\selectfont
+        （{\xeCJKsetup{CJKglue={\hskip 0.25em}}\xmu@type}）
+      }
+      % 中文题目按本次图片要求使用二号黑体（22 pt），固定 30 pt 行距。
+      \xmu@degreecovertext{31.75mm}{115.04mm}{146.5mm}{\centering}{%
+        \xmu@heiti\fontsize{22bp}{30bp}\selectfont\xmu@title
+      }
+      % 英文题目：明确使用 Times New Roman Bold，固定 26 pt 行距。
+      % 可在 \title 的第二个参数中用 \\ 或 \par 指定分行，各行分别居中。
+      % 此处宽度是页面可用宽度，并非学校规定的英文题目最大宽度。
+      \xmu@degreecovertext{31.75mm}{130.43mm}{146.5mm}{\centering}{%
+        \fontspec[BoldFont={Times New Roman Bold}]{Times New Roman}\bfseries
+        \fontsize{16bp}{26bp}\selectfont\xmu@entitle
+      }
+      % 作者独立居中：楷体 18 pt 加粗。
+      \xmu@degreecovertext{31.75mm}{166.78mm}{146.5mm}{\centering}{%
+        \kaishu\bfseries\fontsize{18bp}{30bp}\selectfont\xmu@author
+      }
+      % 个人信息：楷体 15 pt 常规，四个独立左对齐段落，固定 31 pt 行距。
+      % 起点 X=72.24 mm；后续三行顶部约为 196.62、207.55、218.49 mm。
+      % 标签采用字间距排布，不使用表格或固定宽度标签列。
+      % 长标签六字、短标签四字；短标签的三个字间各补 2/3em，补足两字宽，使冒号对齐。
+      \xmu@degreecovertext{72.24mm}{185.68mm}{106.01mm}{\raggedright}{%
+        \fontspec{simkai.ttf}\kaishu\mdseries\fontsize{15bp}{31bp}\selectfont
+        指导教师姓名：\hspace{0.25em}\xmu@advisor\par
+        专\hspace{0.6667em}业\hspace{0.6667em}名\hspace{0.6667em}称：\hspace{0.25em}\xmu@subject\par
+        答\hspace{0.6667em}辩\hspace{0.6667em}日\hspace{0.6667em}期：\hspace{0.25em}%
+        \ifdefempty{\xmu@defensedate}{\hspace{2em}年\hspace{1.5em}月}{\xmu@defensedate}\par
+        学位授予日期：\hspace{0.25em}%
+        \ifdefempty{\xmu@awarddate}{\hspace{2em}年\hspace{1.5em}月}{\xmu@awarddate}
+      }
+      % 底部日期：宋体 14 pt 加粗，固定顶部 Y=262.06 mm，不随内容漂移。
+      \xmu@degreecovertext{31.75mm}{262.06mm}{146.5mm}{\centering}{%
+        \fontspec[AutoFakeBold=2.17]{simsun.ttc}\songti\bfseries
+        \fontsize{14bp}{17bp}\selectfont\xmu@coverdate
+      }
+    \end{tikzpicture}%
+    % overlay 不占页面高度，用空盒确保封面页实际输出。
+    \null\par
+  \endgroup
+  \restoregeometry
+}
+
+\renewcommand{\maketitle}{
+  \ifcsdef{xmu@cover}{}{\ClassError{xmu-graduate}{Set \string\thesiscover{degree} or {practice}}{}}
+  \ifdefstring{\xmu@cover}{degree}{}{\ifdefstring{\xmu@cover}{practice}{}{\ClassError{xmu-graduate}{Invalid cover type}{Use degree or practice}}}
+  \hypersetup{pdftitle={\xmu@title},pdfauthor={\xmu@author},pdfsubject={厦门大学研究生学位论文（实践成果总结报告）}}
+  \clearpage\thispagestyle{empty}
+  \ifdefstring{\xmu@cover}{degree}{\xmu@degreecover}{%
+  % practice 沿用原有布局、校名图片和导师信息结构，题目字体按本次图片要求设置。
+  {\songti\bfseries\zihao{-4}学校编码：\xmu@schoolcode\hfill 学号：\xmu@idn\par}
+  \vspace*{2cm}
+  \begin{center}
+    \includegraphics[width=208pt]{xmu-logo-text.jpg}\par
+    \vspace{1.1cm}
+    {\songti\bfseries\zihao{2}\xmu@level\par}
+    \vspace{0.5cm}
+    {{\heiti\bfseries\zihao{-2}实 践 成 果 总 结 报 告\par}{\heiti\zihao{-2}（专 业 学 位）\par}}
+    \vspace{0.9cm}
+    {\xmu@heiti\zihao{2}\xmu@title\par}
+    \vspace{0.35cm}
+    {\normalfont\rmfamily\bfseries\zihao{3}\xmu@entitle\par}
+    \vspace{0.8cm}
+    {\kaishu\bfseries\zihao{-2}\xmu@author\par}
+    \vspace{0.5cm}
+    {\kaishu\zihao{-3}
+      \xmu@coverrow{校内导师姓名：}{\xmu@campusadvisor}\xmu@coverrow{行业导师姓名：}{\xmu@industryadvisor}
+      \xmu@coverrow{专业名称：}{\xmu@subject}
+      \xmu@coverrow{答辩日期：}{\xmu@defensedate}
+      \xmu@coverrow{学位授予日期：}{\xmu@awarddate}
+    }
+    \vfill
+    {\songti\bfseries\zihao{4}\xmu@coverdate\par}
+  \end{center}
+  }
+  \clearpage
+  \pagenumbering{Roman}\zihao{-4}
+}

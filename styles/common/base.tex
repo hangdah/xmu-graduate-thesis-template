@@ -1,0 +1,43 @@
+% ==================== 基础文档类、宏包与页面边距（geometry 参数） ====================
+
+\PassOptionsToPackage{AutoFakeBold}{xeCJK}
+\LoadClass{ctexbook}
+
+%%%%%%%% 宏包 %%%%%%%%
+
+% 页面尺寸
+% 页眉顶部距纸边 20 mm；正文顶部 30 mm；页脚基线距底边 17.5 mm。
+\RequirePackage[a4paper,top=30mm,bottom=25.4mm,left=31.7mm,right=31.7mm,headheight=15pt,headsep={\dimexpr10mm-15pt\relax},footskip=7.9mm]{geometry}
+% 自定义页眉页脚
+\RequirePackage{fancyhdr}
+% 自定义章节标题
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+% 首行缩进
+\RequirePackage{indentfirst}
+% 插图
+\RequirePackage{graphicx}
+\RequirePackage{caption}
+\RequirePackage{etoolbox}
+% 表格线
+\RequirePackage{booktabs}
+% 数学公式
+\RequirePackage{array}
+\RequirePackage[fleqn]{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathptmx}
+\RequirePackage{bm}
+% 绘图
+\RequirePackage{pgfplots}
+% 算法
+\RequirePackage[ruled]{algorithm2e}
+% 自定义脚注
+\RequirePackage{scrextend}
+% 自定义参考文献
+\RequirePackage[square,super,comma,sort,compress]{natbib}
+\RequirePackage{longtable}
+\RequirePackage[normalem]{ulem}
+% 引用、超链接
+\RequirePackage[colorlinks,citecolor=black,linkcolor=black,urlcolor=black,bookmarksnumbered=true,bookmarksopen=true,hypertexnames=false]{hyperref}
+% 条件编译
+\RequirePackage{ifthen}

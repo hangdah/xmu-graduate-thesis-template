@@ -1,0 +1,78 @@
+% ==================== 原创性声明的文字与排版 ====================
+
+% 本页独立处理括号占位：保留原有信息变量，空值只留白，不自动画横线。
+% #1 为变量名，#2 为空白宽度；默认宽度按官方 PDF 中括号间的留白估算。
+\newcommand{\xmu@originalityfield}[2]{%
+  \ifcsvoid{#1}{\hspace{#2}}{\csuse{#1}}%
+}
+
+\newcommand{\makeoriginality}{%
+  % 保留规范字体；仅在调用本页时检查，不给其他声明页更换字体。
+  % 本机尚缺方正小标宋简体，安装该字体后再编译，不静默使用替代字体。
+  \IfFontExistsTF{方正小标宋简体}{%
+    \IfFontExistsTF{FangSong}{%
+      \newgeometry{left=31.75mm,right=31.75mm,top=25.40mm,bottom=25.40mm}%
+      \thispagestyle{empty}%
+      \begingroup
+        % Word 的磅值用 bp 表示；正文、签名、日期均为仿宋 16 磅，固定 28 磅行距。
+        \linespread{1}\normalfont
+        \fontspec{FangSong}\CJKfontspec{FangSong}\mdseries\upshape
+        \fontsize{16bp}{28bp}\selectfont
+        \color{black}%
+        \setlength{\topskip}{0pt}%
+        \setlength{\parskip}{0pt}%
+        \setlength{\leftskip}{0pt}%
+        \setlength{\rightskip}{0pt}%
+        \setlength{\parfillskip}{0pt plus 1fil}%
+        \setlength{\parindent}{11.289mm}%
+
+        % 标题采用两个独立居中段落，方正小标宋简体 18 磅，不加粗。
+        % 标题块从版心顶部起，高 47.11 mm：25.40 + 47.11 = 正文目标 Y=72.51 mm。
+        % 首行顶部留白 12.83 mm，使其目标 Y=38.23 mm；31.2 bp 行距使第二行约为 49.24 mm。
+        % 这里定位的是文字盒；可见字形边界仍需安装指定字体后通过 PDF 校准。
+        \vbox to 47.11mm{%
+          \hsize=\textwidth
+          \setlength{\parindent}{0pt}%
+          \centering
+          \fontspec{方正小标宋简体}\CJKfontspec{方正小标宋简体}\mdseries\upshape
+          \fontsize{18bp}{31.2bp}\selectfont
+          \vskip 12.83mm
+          \noindent 厦门大学学位论文（实践成果总结报告）\par
+          \noindent 原创性声明\par
+          \vss
+        }%
+        \nointerlineskip
+        % 第一段首行缩进 11.289 mm；保留官方文本中的 ASCII 逗号“下,独立完成”。
+        \indent 本人呈交的学位论文（实践成果总结报告）是本人在导师指导下,独立完成的研究成果。本人在论文（报告）写作中参考其他个人或集体已经发表的研究成果，均在文中以适当方式明确标明，并符合法律规范和《厦门大学研究生学术活动规范（试行）》。\par
+        % 资助声明保留 P5/P6 的分段：P5 缩进，末尾为“课题”；P6 顶格续排。
+        % 三个空白分别约为 42、120、124 bp；填写信息时输出变量原值，不添加划线。
+        \indent 另外，该学位论文（实践成果总结报告）为（\xmu@originalityfield{xmu@project}{42bp}）课题（组）的研究成果，获得（\xmu@originalityfield{xmu@funding}{120bp}）课题\par
+        \noindent （组）经费或实验室的资助，在（\xmu@originalityfield{xmu@lab}{124bp}）实验室完成。（请在以上括号内填写课题或课题组负责人或实验室名称，未有此项声明内容的，须划去括号内对应内容，不得留白。）\par
+        % 学术诚信段的首行缩进单独设为 10.583 mm，不改变资助声明续段的缩进。
+        \setlength{\parindent}{10.583mm}%
+        \indent 本人声明该学位论文（实践成果总结报告）不存在剽窃、抄袭等学术不端行为，并愿意承担因学术不端行为所带来的一切后果和法律责任。\par
+
+        % 空段落保留一个 28 bp 行距；签名用普通段落缩进，不用表格、横线或 hfill。
+        % 31.75 + 87.03 = 118.78 mm，接近参考签名起点 X=118.81 mm。
+        \noindent\null\par
+        \setlength{\parindent}{87.03mm}%
+        \indent 声明人\hspace{1em}（签名）：\par
+        \indent 指导教师（签名）：\par
+
+        % 签名后再留一个空段落；直接定位日期可见“年”字，计入原参考的前置空格。
+        % 31.75 + 88.63 = 120.38 mm；年月日之间各留约三个仿宋空格的宽度。
+        \noindent\null\par
+        \setlength{\parindent}{88.63mm}%
+        \indent 年\hspace{1.5em}月\hspace{1.5em}日\par
+      \endgroup
+      % 恢复正文页边距；本页不重置页码，也不修改其他声明页的公共宏。
+      \restoregeometry
+    }{%
+      \ClassError{xmu-graduate}{Originality body font missing: FangSong}%
+        {Install FangSong and recompile. No substitute font is selected.}%
+    }%
+  }{%
+    \ClassError{xmu-graduate}{Originality title font missing: 方正小标宋简体}%
+      {Install the required FZXiaoBiaoSong font and recompile. No substitute font is selected.}%
+  }%
+}

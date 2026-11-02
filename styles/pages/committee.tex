@@ -1,0 +1,55 @@
+% ==================== 答辩委员会信息命令与名单页排版 ====================
+
+\newcommand{\committeechair}[3]{\def\xmu@chair{#1&#2&#3\\}}
+\def\xmu@members{}
+\newcommand{\committeemember}[3]{%
+  % “委员”仅在首位委员所在行显示，后续行保留空白的第一列。
+  \ifdefempty{\xmu@members}{%
+    \g@addto@macro\xmu@members{委\hspace{1em}员：&#1&#2&#3\\}%
+  }{%
+    \g@addto@macro\xmu@members{&#1&#2&#3\\}%
+  }%
+}
+\newcommand{\makecommittee}{%
+  \IfFontExistsTF{FangSong}{%
+    \newgeometry{top=25.40mm,bottom=25.40mm,left=31.75mm,right=31.75mm}%
+    \thispagestyle{empty}%
+    \begingroup
+      % 中文名单按官方 PDF 使用 FangSong，西文使用 Times New Roman。
+      % Word 的磅对应 bp；本页不继承正文的 1.5 倍行距和粗体设置。
+      \linespread{1}\normalfont\mdseries\upshape
+      \fontspec{Times New Roman}\CJKfontspec{FangSong}%
+      \color{black}%
+      \xeCJKsetup{PunctStyle=plain}%
+      \setlength{\topskip}{\dimexpr 32.942mm-25.40mm\relax}%
+      \setlength{\parindent}{0pt}%
+      \setlength{\parskip}{0pt}%
+      \setlength{\leftskip}{0pt}%
+      \setlength{\rightskip}{0pt}%
+      \setlength{\parfillskip}{0pt plus 1fil}%
+      % 标题为独立居中段落，黑体 16 磅，常规字重。
+      {\centering\heiti\fontsize{16bp}{31.2bp}\selectfont
+        \noindent 答辩委员会名单\par
+      }%
+      \fontsize{14bp}{31.2bp}\selectfont
+      % 标题与首行基线相差 24.511 mm，扣除正常行距后补足空白。
+      \vspace{\dimexpr 24.511mm-31.2bp\relax}%
+      \setlength{\tabcolsep}{1.905mm}%
+      \setlength{\extrarowheight}{0pt}%
+      \renewcommand{\arraystretch}{1}%
+      % 列宽扣除各自两侧内边距；总宽 147.532 mm，略超出版心并居中。
+      \noindent\makebox[\textwidth][c]{%
+        \begin{tabular}[t]{>{\centering\arraybackslash}p{21.202mm}
+          >{\raggedright\arraybackslash}p{28.699mm}
+          >{\raggedright\arraybackslash}p{21.184mm}
+          >{\raggedright\arraybackslash}p{61.207mm}}
+          \ifcsdef{xmu@chair}{主\hspace{1em}席：&\xmu@chair}{}\xmu@members
+        \end{tabular}%
+      }\par
+    \endgroup
+    \restoregeometry
+  }{%
+    \ClassError{xmu-graduate}{Committee body font missing: FangSong}%
+      {Install FangSong and recompile. No substitute font is selected.}%
+  }%
+}

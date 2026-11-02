@@ -1,0 +1,37 @@
+% ==================== 中英文字体、数学字体和默认行距 ====================
+
+%%%%%%%% 字体、段落 %%%%%%%%
+
+% 采用 Windows 字体文件以兼容 macOS 和 Linux
+\setCJKfamilyfont{simsun}{simsun.ttc}
+\setCJKfamilyfont{simhei}{simhei.ttf}
+\setCJKfamilyfont{simkai}{simkai.ttf}
+
+\renewcommand{\songti}{\CJKfamily{simsun}} % 宋体
+\renewcommand{\heiti}{\CJKfamily{simhei}}  % 黑体
+\renewcommand{\kaishu}{\CJKfamily{simkai}} % 楷体
+
+% 英文默认字体
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+% 中文默认字体
+\setCJKmainfont[AutoFakeBold=2.17,ItalicFont=simkai.ttf]{simsun.ttc}
+\setCJKsansfont{simhei.ttf}
+% 这样设置之后，针对不同的中英字体效果如下：
+% \rm：中文宋体，英文 Times New Roman
+% \sf：中文黑体，英文 Arial
+% \bf：中文宋体加粗，英文 Times New Roman 加粗
+% \it：中文楷体，英文 Times New Roman 斜体
+% \bf\songti：中文宋体加粗，英文 Times New Roman 加粗
+
+% 通用格式显式配对中西文字体；声明页仍可单独指定各自的专项字体。
+\newcommand{\xmu@songti}{\normalfont\rmfamily\songti}
+\newcommand{\xmu@heiti}{\normalfont\sffamily\heiti}
+
+% 数学加粗斜体
+\DeclareMathAlphabet{\mathbfit}{T1}{ptm}{b}{it}
+\renewcommand{\boldsymbol}[1]{\mathbfit{#1}}
+% URL 字体
+\urlstyle{same}
+% 默认行距
+\renewcommand{\baselinestretch}{1.5}

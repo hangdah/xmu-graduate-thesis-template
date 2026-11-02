@@ -1,0 +1,26 @@
+% ==================== 脚注编号、字体、分隔线与间距 ====================
+
+%%%%%%%% 脚注 %%%%%%%%
+
+% 按实际输出页重置；需要复编后才能稳定处理自动分页附近的脚注。
+\RequirePackage{perpage}
+% 每页重置取代 ctexbook 的按章重置，避免章节开始时产生一次虚拟脚注计数。
+\@removefromreset{footnote}{chapter}
+\MakePerPage{footnote}
+
+% 脚注字体
+% 圆圈显式使用符号字体，数字仍为 Times New Roman，避免 OMS/Times 字形回退。
+\newcommand{\xmu@circlednumber}[1]{%
+    \begingroup\fontencoding{OMS}\fontfamily{cmsy}\selectfont
+        \textcircled{\normalfont\rmfamily\zihao{7}#1}%
+    \endgroup
+}
+\renewcommand{\thefootnote}{\xmu@circlednumber{\arabic{footnote}}}
+\renewcommand{\thempfootnote}{\xmu@circlednumber{\arabic{mpfootnote}}}
+\renewcommand{\footnotesize}{\linespread{1.5}\xmu@songti\zihao{-5}}
+% 脚注线
+\renewcommand{\footnoterule}{\vspace{1em}\hrule width 0.4\columnwidth height 0.4pt\vspace{0.3em}}
+% 脚注缩进、行距
+\renewcommand{\footnotesep}{1.2em}
+\deffootnote[3ex]{3ex}{1em}{\zihao{7}\raisebox{0.4ex}{\rm\zihao{-5}\thefootnotemark}}
+\AddToHook{cmd/@makefntext/before}{\raggedright}

@@ -1,0 +1,100 @@
+% ==================== 使用或未使用人工智能工具声明的文字与排版 ====================
+
+% 签名和日期保留普通段落，用固定偏移还原原文居中段落中的前置空格。
+\newcommand{\xmu@aisignature}[2]{%
+  \fontsize{16bp}{28bp}\selectfont
+  \setlength{\parindent}{#1}%
+  \indent 作者签名：\par
+  \setlength{\parindent}{#2}%
+  \indent {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+    \mbox{日期：\_\_\_\_年\_\_月\_\_日}}\par
+}
+
+\newcommand{\makeaideclaration}{%
+  \ifboolexpr{test {\ifdefstring{\xmu@ai}{used}} or test {\ifdefstring{\xmu@ai}{unused}}}{%
+    \IfFontExistsTF{方正小标宋简体}{%
+      \IfFontExistsTF{FangSong}{%
+        % 两种版本的下边距不同，结束后恢复正文页面设置。
+        \ifdefstring{\xmu@ai}{used}{%
+          \newgeometry{top=25.40mm,bottom=19.40mm,left=31.75mm,right=31.75mm}%
+        }{%
+          \newgeometry{top=25.40mm,bottom=25.40mm,left=31.75mm,right=31.75mm}%
+        }%
+        \thispagestyle{empty}%
+        \begingroup
+          % Word 的磅对应 bp；中西文使用相同字体，不继承正文的 1.5 倍行距。
+          \linespread{1}\normalfont
+          \fontspec{FangSong}\CJKfontspec{FangSong}\mdseries\upshape
+          \color{black}%
+          \xeCJKsetup{PunctStyle=quanjiao}%
+          \setlength{\topskip}{\dimexpr 32.61mm-25.40mm\relax}%
+          \setlength{\parskip}{0pt}%
+          \setlength{\leftskip}{0pt}%
+          \setlength{\rightskip}{0pt}%
+          \setlength{\parfillskip}{0pt plus 1fil}%
+          % 两行标题为独立居中段落；31.2 磅基线间距对应参考 PDF 的标题位置。
+          {\centering
+            \fontspec{方正小标宋简体}\CJKfontspec{方正小标宋简体}\mdseries\upshape
+            \xeCJKsetup{PunctStyle=plain}%
+            \fontsize{18bp}{31.2bp}\selectfont
+            \noindent 研究生学位论文（实践成果总结报告）\par
+            \ifdefstring{\xmu@ai}{used}{%
+              \noindent 使用人工智能工具声明\par
+            }{%
+              \noindent 未使用人工智能工具声明\par
+            }%
+          }%
+  \ifdefstring{\xmu@ai}{used}{%
+    \fontsize{16bp}{26bp}\selectfont
+    \setlength{\parindent}{32bp}%
+    % 按正常段落流校准正文首行顶部至参考 Y=49.9 mm。
+    \vspace{5.55bp}%
+    本学位论文（实践成果总结报告）的研究与撰写过程，使用了生成式人工智能辅助工具。现按照要求披露如下：\par
+    \vspace{7.85bp}%
+    {\fontspec{simhei.ttf}\heiti\mdseries\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+      1.使用的生成式人工智能工具名称及目的\par}%
+    {\fontspec{simkai.ttf}\kaishu\mdseries 工具名称：\ifcsdef{xmu@aitools}{\xmu@aitools}{}\par}%
+    \mbox{\xeCJKsetup{PunctStyle=plain}（}例如：DeepSeek、文心一言、豆包、智谱、千问等AI大模型，以及调用AI大模型的智能体工具等）\par
+    {\fontspec{simkai.ttf}\kaishu\mdseries 具体用途：\ifcsdef{xmu@aiusage}{\xmu@aiusage}{}\par}%
+    % 原文件此段首行缩进 21 磅，开头两个空格及左括号继承宋体 10.5 磅。
+    {\setlength{\parindent}{21bp}%
+      \indent\mbox{\fontspec{simsun.ttc}\songti\fontsize{10.5bp}{26bp}\selectfont
+        \xeCJKsetup{PunctStyle=plain}\hspace*{2\fontdimen2\font}（}%
+      例如：研究思路启发、前沿方法学习、文献检索与梳理、数据分析和可视化、图表图像制作、内容润色与格式规范等）\par
+    }%
+    \vspace{7.85bp}%
+    {\fontspec{simhei.ttf}\heiti\mdseries\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+      2.使用边界与责任说明\par}%
+    本学位论文（实践成果总结报告）的核心观点、研究设计、实验方案、论证过程均由本人独立完成：人工智能生成内容均经过本人人工审核、修改与验证，并对其内容负责。本人对论文（报告）全部内容的原创性、真实性、学术规范性承担全部责任，不存在由人工智能代写、伪造等学术不端行为。\par
+    \vspace{7.85bp}%
+    {\fontspec{simhei.ttf}\heiti\mdseries\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+      3.承诺\par}%
+    本人承诺人工智能工具在学位论文（实践成果总结报告）中的使用符合国家相关法律法规及学校具体细则要求，不存在不当使用行为，愿意接受审查与监督，并独立承担相应责任和后果。\par
+    \xmu@aisignature{83.15mm}{81.75mm}%
+  }{%
+      \fontsize{16bp}{28bp}\selectfont
+      \setlength{\parindent}{32bp}%
+      % 标题后两个默认样式空段落的留白，以正文首行顶部 Y=61.5 mm 校准。
+      \vspace{36.44bp}%
+      本学位论文（实践成果总结报告）的研究与撰写过程未使用任何生成式人工智能工具（指能够根据提示自动生成文本、代码、图表等内容的大模型及其衍生工具）。\par
+      所有内容均基于个人研究、文献阅读及实验数据完成，本人承诺符合学术诚信要求，论文（报告）中不存在任何人工智能辅助生成内容。违反本声明所产生的责任与后果，由本人独立承担。\par
+      \xmu@aisignature{84.65mm}{83.25mm}%
+  }%
+        \endgroup
+        \restoregeometry
+      }{%
+        \ClassError{xmu-graduate}{AI declaration body font missing: FangSong}%
+          {Install FangSong and recompile. No substitute font is selected.}%
+      }%
+    }{%
+      \ClassError{xmu-graduate}{AI declaration title font missing: 方正小标宋简体}%
+        {Install the required FZXiaoBiaoSong font and recompile. No substitute font is selected.}%
+    }%
+  }{%
+    \ifcsdef{xmu@ai}{%
+      \ClassError{xmu-graduate}{Invalid AI declaration}{Use used or unused}%
+    }{%
+      \ClassError{xmu-graduate}{Set \string\aideclaration{used} or {unused}}{}%
+    }%
+  }%
+}

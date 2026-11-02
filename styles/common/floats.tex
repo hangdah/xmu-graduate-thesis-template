@@ -1,0 +1,42 @@
+% ==================== 图片、表格、公式编号及代码和算法样式 ====================
+
+%%%%%%%% 图表、公式、代码、算法 %%%%%%%%
+
+% 图表目录
+\graphicspath{{figures/}}
+% 图表编号
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+% 图表字体
+\DeclareCaptionFont{simsun5bf}{\xmu@songti\bfseries\zihao{5}\linespread{1.5}\selectfont}
+\captionsetup[figure]{position=bottom,justification=centering,singlelinecheck=false,belowskip=16bp,font=simsun5bf}
+\captionsetup[table]{position=top,justification=centering,singlelinecheck=false,aboveskip=16bp,belowskip=2ex,font=simsun5bf}
+% 浮动体初始化后显式使用五号宋体，避免初始化恢复默认字号。
+\newcommand{\xmu@floatbody}{\xmu@songti\zihao{5}\linespread{1.5}\selectfont\centering\setlength{\parindent}{0pt}}
+\AtBeginEnvironment{figure}{\apptocmd{\@floatboxreset}{\xmu@floatbody}{}{}}
+\AtBeginEnvironment{table}{\apptocmd{\@floatboxreset}{\xmu@floatbody}{}{}}
+% 单位与表头为五号宋体加粗；仅对明确的表头单元格使用，避免影响数据行。
+\newcommand{\tablehead}[1]{{\xmu@songti\zihao{5}\bfseries #1}}
+\newcommand{\floatunit}[1]{%
+  \par\begingroup\xmu@songti\zihao{5}\bfseries\linespread{1.5}\selectfont
+    \raggedleft\setlength{\parindent}{0pt}#1\par\endgroup
+}
+% 图表说明或资料来源独立排在下方；不把说明并入编号标题。
+\newcommand{\floatnote}[1]{%
+  \par\begingroup\xmu@songti\zihao{-5}\linespread{1.5}\selectfont
+    \raggedright\setlength{\parindent}{0pt}#1\par\endgroup
+}
+% fleqn 保持公式主体左侧缩进，编号仍由 amsmath 在右侧生成。
+\AtBeginEnvironment{equation}{\setlength{\mathindent}{2em}}
+\AtBeginEnvironment{align}{\setlength{\mathindent}{2em}}
+\AtBeginEnvironment{gather}{\setlength{\mathindent}{2em}}
+% 代码、算法字体
+\AtBeginEnvironment{verbatim}{\par\linespread{1.5}\zihao{5}}
+\AtBeginEnvironment{algorithm}{\par\linespread{1.5}\zihao{5}}
+% 算法行距
+\AtEndEnvironment{algorithm}{\vspace*{-0.5ex}}
+\renewcommand{\interspacetitleruled}{1ex}
+\SetAlgoInsideSkip{smallskip}
+\renewcommand{\algorithmcfname}{\quad\bf\songti 算法}
+\renewcommand{\algomargin}{2em}

@@ -1,0 +1,99 @@
+% ==================== 中英文目录、目录字体与双语章节命令 ====================
+
+%%%%%%%% 目录 %%%%%%%%
+
+% 设置目录深度，只显示到 subsection
+\setcounter{tocdepth}{2}
+
+\renewcommand{\tableofcontents}{
+    % 设置目录中的章节编号格式
+    \ifthenelse{\isundefined{\xmu@arabicchapter}}{}{
+        \ctexset{
+            chapter={
+                name={,},
+                number=\arabic{chapter}
+            }
+        }
+        \renewcommand{\enchapter}[1]{
+            \addcontentsline{entoc}{chapter}{
+                \protect\numberline{\thechapter}##1
+            }
+        }
+    }
+
+    % 中文目录
+    \xmu@fronttitle{\xmu@heiti\zihao{-3}}{目\quad 录}%
+    % 中文目录页脚
+    \pagestyle{xmu@front}\thispagestyle{xmu@front}%
+    % 中文目录内容
+    \setlength{\parindent}{0pt}%
+    \@starttoc{toc}
+    \clearpage
+
+    \def\xmu@entoc{true}
+    % 英文目录标题
+    \xmu@fronttitle{\normalfont\rmfamily\bfseries\zihao{-3}}{Table of Contents}%
+    % 英文目录页脚
+    \pagestyle{xmu@front}\thispagestyle{xmu@front}%
+    % 英文目录内容
+    \setlength{\parindent}{0pt}%
+    \@starttoc{entoc}
+    \clearpage
+    \ifthenelse{\isundefined{\xmu@print}}{}{\cleardoublepage}
+
+    % 定义目录后的页码格式为阿拉伯数字
+    \pagenumbering{arabic}
+    \csundef{xmu@inabstract}%
+    \xmu@bodyparagraphs
+}
+
+% 定义英文目录相关指令
+\newcommand{\enchapter}[1]{
+    \addcontentsline{entoc}{chapter}{
+        \protect\numberline{Chapter~\thechapter}#1
+    }
+}
+\newcommand{\ensection}[1]{
+    \addcontentsline{entoc}{section}{
+        \protect\numberline{\thesection}#1
+    }
+}
+\newcommand{\ensubsection}[1]{
+    \addcontentsline{entoc}{subsection}{
+        \protect\numberline{\thesubsection}#1
+    }
+}
+
+% 定义中英双语目录相关指令
+\newcommand{\xmuchapter}[2]{
+    \chapter{#1}\enchapter{#2}
+}
+\newcommand{\xmusection}[2]{
+    \section{#1}\ensection{#2}
+}
+\newcommand{\xmusubsection}[2]{
+    \subsection{#1}\ensubsection{#2}
+}
+
+% 目录字体
+% 一级标题
+\titlecontents{chapter}[0pt]
+{\addvspace{6bp}\ifthenelse{\isundefined{\xmu@entoc}}{\xmu@heiti}{\normalfont\rmfamily\bfseries}\zihao{4}\linespread{1.5}\selectfont}
+{\thecontentslabel\;}
+{}
+{\,\titlerule*{.}\contentspage}
+ [\addvspace{6bp}]
+% 二级标题
+\titlecontents{section}[10.5bp]
+{\addvspace{3bp}\ifthenelse{\isundefined{\xmu@entoc}}{\xmu@heiti}{\normalfont\rmfamily\bfseries}\zihao{-4}\linespread{1.5}\selectfont}
+{\ifthenelse{\isundefined{\xmu@entoc}}{\thecontentslabel\;\;}{\thecontentslabel\;}}
+{}
+{\,\titlerule*{.}\contentspage}
+ [\addvspace{3bp}]
+% 三级标题
+\titlecontents{subsection}[21bp]
+{\addvspace{3bp}\xmu@songti\zihao{-4}\linespread{1.5}\selectfont}
+{\ifthenelse{\isundefined{\xmu@entoc}}{\thecontentslabel\;\,}{\thecontentslabel\,}}
+{}
+{\,\titlerule*{.}\contentspage}
+ [\addvspace{3bp}]

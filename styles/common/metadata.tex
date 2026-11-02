@@ -1,0 +1,37 @@
+% ==================== 论文信息与选项的命令定义；具体信息仍在 main.tex 中填写 ====================
+
+%%%%%%%% 用户自定义变量 %%%%%%%%
+
+\newcommand{\print}{\def\xmu@print{true}}                               % 电子版 / 打印版
+\newcommand{\design}{\def\xmu@design{true}}                             % 毕业设计 / 毕业论文
+\newcommand{\minor}{\def\xmu@minor{true}}                               % 主修 / 辅修
+\newcommand{\arabicchapter}{\def\xmu@arabicchapter{true}}               % 章节使用阿拉伯数字编号
+\renewcommand{\title}[2]{\def\xmu@title{#1}\def\xmu@entitle{#2}}        % 标题
+\renewcommand{\author}[1]{\def\xmu@author{#1}}                          % 作者
+\newcommand{\idn}[1]{\def\xmu@idn{#1}}                                  % 学号
+\newcommand{\college}[1]{\def\xmu@college{#1}}                          % 学院
+\newcommand{\subject}[1]{\def\xmu@subject{#1}}                          % 专业
+\newcommand{\grade}[1]{\def\xmu@grade{#1}}                              % 年级
+\newcommand{\teacher}[1]{\def\xmu@teacher{#1}}                          % 指导教师
+\newcommand{\otherteacher}[1]{\def\xmu@otherteacher{#1}}                % 校外指导教师
+\newcommand{\pubdate}[1]{\def\xmu@pubdate{#1}}                          % 日期
+\newcommand{\keywords}[2]{\def\xmu@keywords{#1}\def\xmu@enkeywords{#2}} % 关键字
+
+%%%%%%%% 研究生封面与声明 %%%%%%%%
+\newcommand{\thesiscover}[1]{\def\xmu@cover{#1}}
+\newcommand{\aideclaration}[1]{\def\xmu@ai{#1}}
+\newcommand{\degreelevel}[1]{\def\xmu@level{#1}}
+\newcommand{\degreetype}[1]{\def\xmu@type{#1}}
+\newcommand{\advisor}[1]{\def\xmu@advisor{#1}}
+\newcommand{\campusadvisor}[1]{\def\xmu@campusadvisor{#1}}
+\newcommand{\industryadvisor}[1]{\def\xmu@industryadvisor{#1}}
+\newcommand{\defensedate}[1]{\def\xmu@defensedate{#1}}
+\newcommand{\awarddate}[1]{\def\xmu@awarddate{#1}}
+\newcommand{\coverdate}[1]{\def\xmu@coverdate{#1}}
+\newcommand{\schoolcode}[1]{\def\xmu@schoolcode{#1}}
+\schoolcode{10384}
+\newcommand{\researchproject}[1]{\def\xmu@project{#1}}
+\newcommand{\researchfunding}[1]{\def\xmu@funding{#1}}
+\newcommand{\researchlab}[1]{\def\xmu@lab{#1}}
+\newcommand{\aitools}[1]{\def\xmu@aitools{#1}}
+\newcommand{\aiusage}[1]{\def\xmu@aiusage{#1}}

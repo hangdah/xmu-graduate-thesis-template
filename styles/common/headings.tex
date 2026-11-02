@@ -1,0 +1,98 @@
+% ==================== 正文章节编号、标题间距及章节页眉页脚（含 plain 样式） ====================
+
+%%%%%%%% 章节 %%%%%%%%
+
+% 为 subsubsection 也启用编号
+\setcounter{secnumdepth}{3}
+
+% 章节标题字体
+\newlength{\xmu@chaptertitleheight}
+% 章号与章名保持同一行；标题区域至少占两个正文行高，长标题自然增高。
+\newcommand{\xmu@chaptertitlebox}[1]{%
+    \setbox\@tempboxa=\vbox{\hsize=\linewidth\centering
+        \ifttl@label
+            \ifcsdef{xmu@arabicchapter}{\thechapter}{第\zhnumber{\thechapter}章}\hspace{1em}%
+        \fi
+        #1\par
+    }%
+    \ifdim\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax<\xmu@chaptertitleheight
+        \vbox to\xmu@chaptertitleheight{\vfil\box\@tempboxa\vfil}%
+    \else
+        \box\@tempboxa
+    \fi
+}
+\titleformat{\chapter}[block]{\xmu@heiti\zihao{-3}\linespread{1.5}\selectfont\let\ttl@strut\@empty}{}{0pt}{\xmu@chaptertitlebox}
+\titleformat{\section}{\xmu@heiti\zihao{4}}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\xmu@heiti\zihao{-4}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\sf\bfseries\zihao{-4}}{\thesubsubsection}{0.5em}{}
+
+% 章节标题行间距
+\titlespacing{\chapter}{\z@}{0pt}{0pt}
+\titlespacing{\section}{\z@}{18bp}{12bp}
+\titlespacing{\subsection}{\z@}{12bp}{12bp}
+\titlespacing{\subsubsection}{\z@}{1ex \@plus 0.7ex \@minus 0ex}{0.7ex}
+
+% 章节页眉、页脚
+% 普通段落统一设置，标题、目录、图表及参考文献在各自模块中单独处理。
+\newcommand{\xmu@bodyparagraphs}{%
+    \xmu@songti\zihao{-4}%
+    \linespread{1.5}\selectfont
+    \setlength{\xmu@chaptertitleheight}{2\baselineskip}%
+    \setlength{\parindent}{2em}%
+    \setlength{\parskip}{0pt}%
+    \setlength{\leftskip}{0pt}%
+    \setlength{\rightskip}{0pt}%
+    \setlength{\parfillskip}{0pt plus 1fil}%
+    \setlength{\mathindent}{2em}%
+}
+\AtBeginDocument{\xmu@bodyparagraphs}
+
+% 打印版按需补空白页，补页不显示页眉、页脚和页码。
+\renewcommand{\cleardoublepage}{%
+    \clearpage
+    % 封面后或正文前会重置逻辑页码，打印版应依据实际纸张页序判断奇偶。
+    \ifcsdef{c@abspage}{\@tempcnta=\value{abspage}}{\@tempcnta=\c@page}%
+    \if@twoside\ifodd\@tempcnta\else
+        \hbox{}\thispagestyle{empty}\newpage
+        \if@twocolumn\hbox{}\thispagestyle{empty}\newpage\fi
+    \fi\fi
+}
+\fancypagestyle{xmu@front}{%
+    \fancyhf{}%
+    \renewcommand{\headrulewidth}{0.4pt}%
+    \fancyhead[OC]{\xmu@songti\zihao{-5}\leftmark}%
+    \fancyhead[EC]{\xmu@songti\zihao{-5}\xmu@title}%
+    \fancyfoot[C]{\normalfont\rmfamily\zihao{-5}\thepage}%
+}
+% 摘要和目录复用固定 36 磅标题行距、24 磅段后间距，字体由调用处保留。
+\newcommand{\xmu@fronttitle}[2]{%
+    \begingroup
+        \def\xmu@inabstract{true}%
+        \titleformat{\chapter}{\centering#1\linespread{1}\selectfont\setlength{\baselineskip}{36bp}}{}{0pt}{}%
+        \titlespacing{\chapter}{0pt}{0pt}{24bp}%
+        \chapter*{#2}%
+    \endgroup
+    \markboth{#2}{#2}%
+    \pagestyle{xmu@front}\thispagestyle{xmu@front}%
+}
+\renewcommand{\chaptermark}[1]{%
+    \markboth{\ifcsdef{xmu@arabicchapter}{\thechapter}{第\zhnumber{\thechapter}章}\quad #1}{}%
+}
+\renewcommand{\chapter}{
+    \clearpage
+    \ifthenelse{\isundefined{\xmu@inabstract}}{
+        \ifthenelse{\isundefined{\xmu@print}}{}{\cleardoublepage}
+    }{}
+    \xmu@bodyparagraphs
+    \pagestyle{fancy}
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \fancyhead[OC]{\rm\zihao{-5}\leftmark}  %奇数页眉
+    \fancyhead[EC]{\rm\zihao{-5}\xmu@title} %偶数页眉
+    \fancyfoot[C]{\rm\zihao{-5}\thepage}    %页脚
+    \global\@topnum\z@
+    \@afterindenttrue
+    \secdef\@chapter\@schapter
+}
+
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[OC]{\rm\zihao{-5}\leftmark}\fancyhead[EC]{\rm\zihao{-5}\xmu@title}\fancyfoot[C]{\rm\zihao{-5}\thepage}\renewcommand{\headrulewidth}{0.4pt}}

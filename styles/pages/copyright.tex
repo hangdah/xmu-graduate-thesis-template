@@ -1,0 +1,51 @@
+% ==================== 著作权使用声明的文字与排版 ====================
+
+\newcommand{\makecopyright}{%
+  % 本页独立使用规范字体和版式，不更改其他声明页的公共样式。
+  \IfFontExistsTF{方正小标宋简体}{%
+    \IfFontExistsTF{FangSong}{%
+      \newgeometry{top=25.40mm,bottom=25.40mm,left=31.75mm,right=31.75mm}%
+      \thispagestyle{empty}%
+      \begingroup
+        % Word 的磅对应 bp；中西文均用仿宋，固定 28 磅基线间距。
+        \linespread{1}\normalfont
+        \fontspec{FangSong}\CJKfontspec{FangSong}\mdseries\upshape
+        \fontsize{16bp}{28bp}\selectfont
+        \xeCJKsetup{PunctStyle=quanjiao}%
+        \color{black}%
+        \setlength{\topskip}{\dimexpr 33.32mm-25.40mm\relax}%
+        \setlength{\parskip}{0pt}%
+        \setlength{\leftskip}{0pt}%
+        \setlength{\rightskip}{0pt}%
+        \setlength{\parfillskip}{0pt plus 1fil}%
+        \setlength{\parindent}{32bp}%
+        % 标题为两个独立居中段落，18 磅常规字重，不添加段间空白。
+        {\centering
+          \xeCJKsetup{PunctStyle=plain}%
+          \fontspec{方正小标宋简体}\CJKfontspec{方正小标宋简体}\mdseries\upshape
+          \fontsize{18bp}{28bp}\selectfont
+          \noindent 厦门大学学位论文（实践成果总结报告）\par
+          \noindent 著作权使用声明\par
+        }%
+  本人同意厦门大学根据《中华人民共和国学位法》和学校相关文件保留和使用此学位论文（实践成果总结报告），并向主管部门或其指定机构送交学位论文（实践成果总结报告）（包括纸质版和电子版），允许学位论文（实践成果总结报告）进入厦门大学图书馆及其数据库被查阅、借阅。本人同意厦门大学将学位论文（实践成果总结报告）加入全国博士、硕士学位论文共建单位数据库进行检索，将学位论文（实践成果总结报告）的标题和摘要汇编出版，采用影印、缩印或者其它方式合理复制学位论文（实践成果总结报告）。\par
+  本学位论文（实践成果总结报告）属于：\par
+  \mbox{\xeCJKsetup{PunctStyle=plain}（}\hspace{14.73mm}）1.经厦门大学保密委员会审查核定的涉密学位论文（实践成果总结报告），于\hspace{14.5mm}年\hspace{8.8mm}月\hspace{8.8mm}日解密，解密后适用上述授权。\par
+  \mbox{\xeCJKsetup{PunctStyle=plain}（}\hspace{14.73mm}）2.不涉密，适用上述授权。\par
+  \mbox{\xeCJKsetup{PunctStyle=plain}（}请在以上相应括号内打“√”或填上相应内容。涉密学位论文（实践成果总结报告）应是已经厦门大学保密委员会审定过的学位论文（实践成果总结报告），未经厦门大学保密委员会审定的学位论文（实践成果总结报告）均为公开学位论文（实践成果总结报告）。此声明栏不填写的，默认为公开学位论文（实践成果总结报告），均适用上述授权。）\par
+        % 说明段后额外留 23.45 磅；签名和日期均用普通段落首行缩进。
+        \vspace{23.45bp}%
+        \setlength{\parindent}{272bp}%
+        \indent 声明人（签名）：\par
+        \setlength{\parindent}{280bp}%
+        \indent 年\hspace{8.5mm}月\hspace{8.5mm}日\par
+      \endgroup
+      \restoregeometry
+    }{%
+      \ClassError{xmu-graduate}{Copyright body font missing: FangSong}%
+        {Install FangSong and recompile. No substitute font is selected.}%
+    }%
+  }{%
+    \ClassError{xmu-graduate}{Copyright title font missing: 方正小标宋简体}%
+      {Install the required FZXiaoBiaoSong font and recompile. No substitute font is selected.}%
+  }%
+}
