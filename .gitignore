@@ -3,8 +3,8 @@
 !.latexmkrc
 !.vscode/
 !.vscode/settings.json
-# /build/
-!build/*.pdf
+/build/*
+!/build/*.pdf
 !figures
 !figures/**
 !gbt7714-2005.bst
