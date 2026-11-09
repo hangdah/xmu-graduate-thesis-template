@@ -3,7 +3,11 @@
 !.latexmkrc
 !.vscode/
 !.vscode/settings.json
+# 允许 build 目录存在
+!/build/
+# 忽略 build 目录下的所有内容
 /build/*
+# 只允许上传 PDF
 !/build/*.pdf
 !figures
 !figures/**
