@@ -31,7 +31,7 @@
 !FORMAT_AUDIT.md
 !TODO.md
 !附件/
-# !附件/*.pdf
+!附件/**
 !chapters/
 !chapters/*.tex
 !LICENSE
