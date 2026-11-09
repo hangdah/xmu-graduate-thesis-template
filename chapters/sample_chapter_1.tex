@@ -1,0 +1,109 @@
+% 本文件由 main.tex 载入，无需重复声明文档类或 document 环境。
+\xmuchapter{研究背景与基础排版示例}{Research Background and Basic Typesetting}
+\label{chap:sample-background}
+
+\xmusection{研究背景与目标}{Research Background and Objectives}
+\label{sec:sample-objectives}
+
+本章演示正文、各级标题、图片、三线表、文献引用和数学公式的基本写法。
+全文以输入与输出之间的线性关系为说明对象，所有模型和数据均为排版示例，
+不代表实际研究结论。关于 \TeX{} 排版系统的基础知识，可参阅相关文献\cite{samplebook}。
+正文中的补充说明可以使用脚注\footnote{示例注释：脚注适合放置补充解释，不宜替代正文中的关键论述。}。
+
+\xmusubsection{研究问题}{Research Problem}
+
+设输入量为 $x$，输出量为 $y$，研究目标是利用观测样本估计二者之间的关系。
+正文中可以使用\textbf{加粗文字}强调重要概念，也可以用\emph{强调文字}标记术语。
+符号、变量和简短表达式使用行内公式，例如 $x \in \mathbb{R}$ 和 $y = ax + b$。
+
+% 更细一级的标题使用标准命令；模板目录默认只显示到 subsection。
+\subsubsection{基本假设}
+
+为便于说明，作如下假设：
+\begin{enumerate}
+    \item 输入量和输出量均为标量，且在相同条件下采集。
+    \item 输入与输出之间近似满足线性关系。
+    \item 测量误差以加性噪声的形式影响观测结果。
+\end{enumerate}
+
+\xmusubsection{研究内容}{Research Scope}
+
+本示例主要包含以下内容：
+\begin{itemize}
+    \item 建立输入与输出之间的数学模型，说明符号的含义。
+    \item 通过图片和表格展示研究对象与参数设置。
+    \item 在第\ref{chap:sample-results}章中给出估计方法和结果分析。
+\end{itemize}
+
+\xmusection{图片与表格示例}{Figures and Tables}
+
+图片放置于项目的 figures 文件夹，通过已有的图形路径设置即可直接按文件名载入。
+图\ref{fig:sample}使用项目已有的校名图片，演示图片居中、按正文宽度缩放、
+图题、标签和资料来源的写法；正式论文中应替换为与研究内容相关的图片。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.55\textwidth]{xmu-logo-text.jpg}
+    \caption{图片插入与图题排版示例}
+    \label{fig:sample}
+    \floatnote{资料来源：项目已有的厦门大学校名图片，仅用于演示图片排版。}
+\end{figure}
+
+表\ref{tab:sample}给出示例模型采用的参数。表题放在表格上方，
+表头使用模板提供的加粗命令，表格下方单独标注资料来源。
+
+\begin{table}[htbp]
+    \centering
+    \caption{示例模型参数设置}
+    \label{tab:sample}
+    \floatunit{单位：无量纲}
+    \begin{tabular}{lcl}
+        \toprule
+        \tablehead{参数} & \tablehead{取值} & \tablehead{说明} \\
+        \midrule
+        $a$ & 2.0 & 线性模型斜率 \\
+        $b$ & 1.0 & 线性模型截距 \\
+        $N$ & 5 & 观测样本数量 \\
+        \bottomrule
+    \end{tabular}
+    \floatnote{资料来源：作者构造的示例参数，仅用于排版演示。}
+\end{table}
+
+\xmusection{数学公式与交叉引用}{Equations and Cross-References}
+
+考虑测量误差后，第 $i$ 个样本的观测模型可写为
+\begin{equation}
+    y_i = a x_i + b + \varepsilon_i, \qquad i = 1,2,\ldots,N,
+    \label{eq:sample-model}
+\end{equation}
+其中，$a$ 为斜率，$b$ 为截距，$\varepsilon_i$ 为测量误差，$N$ 为样本数量。
+式\eqref{eq:sample-model}的编号由模板自动生成。
+
+将各个样本按行排列，可将式\eqref{eq:sample-model}写为矩阵形式：
+\begin{align}
+    \mathbf{y} &= \mathbf{X}\boldsymbol{\theta} + \boldsymbol{\varepsilon},
+    \label{eq:sample-matrix} \\
+    \mathbf{X} &=
+    \begin{bmatrix}
+        x_1 & 1 \\
+        x_2 & 1 \\
+        \vdots & \vdots \\
+        x_N & 1
+    \end{bmatrix},
+    \qquad
+    \boldsymbol{\theta} =
+    \begin{bmatrix}
+        a \\
+        b
+    \end{bmatrix}.
+    \label{eq:sample-design}
+\end{align}
+其中，$\mathbf{y} = [y_1,\ldots,y_N]^{\mathrm{T}}$，
+$\boldsymbol{\varepsilon} = [\varepsilon_1,\ldots,\varepsilon_N]^{\mathrm{T}}$。
+第\ref{chap:sample-results}章将依据式\eqref{eq:sample-matrix}估计模型参数。
+
+\xmusection{本章小结}{Chapter Summary}
+
+本章展示了常用的标题层次、段落、列表、脚注、文献引用、图片、三线表和公式。
+图\ref{fig:sample}、表\ref{tab:sample}以及式\eqref{eq:sample-model}
+分别演示了图片、表格和公式的交叉引用。下一章进一步展示方法描述和结果分析的排版。

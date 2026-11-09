@@ -5,7 +5,7 @@
 !.vscode/settings.json
 /build/
 !figures
-!figures/xmu-logo-text.jpg
+!figures/**
 !gbt7714-2005.bst
 !README.md
 !simhei.ttf
