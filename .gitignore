@@ -3,7 +3,7 @@
 !.latexmkrc
 !.vscode/
 !.vscode/settings.json
-/build/
+# /build/
 !build/*.pdf
 !figures
 !figures/**
