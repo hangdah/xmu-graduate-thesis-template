@@ -46,16 +46,16 @@
       % 学位层级与“学位论文”同一行：宋体 22 pt 加粗。
       \xmu@degreecovertext{31.75mm}{75.90mm}{146.5mm}{\centering}{%
         \songti\bfseries\fontsize{22bp}{30bp}\selectfont
-        \xmu@level 学位论文
+        {\xeCJKsetup{CJKglue={\hskip 0.5em}}\xmu@level 学位论文}
       }
       % 类别单独成行，仅输出现有变量中的一个选项，并保留适当字间距。
       \xmu@degreecovertext{31.75mm}{93.57mm}{146.5mm}{\centering}{%
         \songti\bfseries\fontsize{22bp}{30bp}\selectfont
         （{\xeCJKsetup{CJKglue={\hskip 0.25em}}\xmu@type}）
       }
-      % 中文题目按本次图片要求使用二号黑体（22 pt），固定 30 pt 行距。
+      % 中文题目按本次图片要求使用二号黑体（22 pt）加粗，固定 30 pt 行距。
       \xmu@degreecovertext{31.75mm}{115.04mm}{146.5mm}{\centering}{%
-        \xmu@heiti\fontsize{22bp}{30bp}\selectfont\xmu@title
+        \xmu@heiti\bfseries\fontsize{22bp}{30bp}\selectfont\xmu@title
       }
       % 英文题目：明确使用 Times New Roman Bold，固定 26 pt 行距。
       % 可在 \title 的第二个参数中用 \\ 或 \par 指定分行，各行分别居中。
